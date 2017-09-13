@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import Shelves from './Shelves'
+import TabsNav from './TabsNav'
 
-export default class Search extends Component {
+
+export default class Listings extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired
   }
@@ -11,8 +12,7 @@ export default class Search extends Component {
     const { books } = this.props
     return(
       <div>
-
-        <Shelves books={books}/>
+        <TabsNav books={books}/>
       </div>    
     )
   }
