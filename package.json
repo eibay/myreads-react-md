@@ -4,6 +4,7 @@
   "private": true,
   "description": "An example usage of react-md and create-react-app.",
   "dependencies": {
+    "immutability-helper": "^2.3.1",
     "node-sass": "^4.5.2",
     "npm-run-all": "^4.0.2",
     "prop-types": "^15.5.10",

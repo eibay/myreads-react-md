@@ -1,33 +1,34 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {TabsContainer, Tabs, Tab } from 'react-md'
 import Shelves from './Shelves'
 
 class TabsNav extends Component{
     static propTypes = {
-    books: PropTypes.array.isRequired
+    books: PropTypes.array.isRequired,
+    transferShelf: PropTypes.func,
+    search: PropTypes.bool.isRequired,
+    shelf: PropTypes.string.isRequired
+  }
+
+    sortShelf = (shelf)=> {
+      let shelfBooks
+      shelfBooks = this.props.books.filter((book) => book.shelf === (shelf))
+      return shelfBooks
   }
 
   render(){
-    const {books} = this.props
+    const {books, transferShelf, search, shelf } = this.props
+
+    let showBooks
+    if (search === false){
+      showBooks = this.sortShelf(shelf)
+    }else{
+      showBooks = books
+    }
+
     return(
       <div>
-        <TabsContainer panelClassName="md-grid" colored>
-          <Tabs tabId="TabsNav-tab">
-            <Tab label="Currently Reading">
-              <h3>I am currently reading all these books!</h3>
-            </Tab>
-            <Tab label="Want To Read">
-              <h3>Want To Read books will be shown here!</h3>
-            </Tab>
-            <Tab label="Read">
-              <h3>Read books will be listed here!</h3>
-            </Tab>
-          </Tabs>
-        </TabsContainer>
-
-        <Shelves books={books} />
-      
+        <Shelves books={showBooks} transferShelf={transferShelf} />
       </div>
     )
   }

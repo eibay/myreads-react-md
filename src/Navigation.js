@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import { Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-import Simplebar from './Simplebar'
 import NavigationDrawer from 'react-md/lib/NavigationDrawers'
 import NavLink from './NavLink'
 
@@ -32,9 +31,14 @@ import About from './About'
   ]
 
 export default class Navigation extends Component{
+  static proptypes = {
+    books: PropTypes.array.isRequired,
+    listTitles: PropTypes.string,
+    shelves: PropTypes.array
+  }
 
   render(){
-    const {books} = this.props
+    const {books, listTitles, shelves} = this.props
     return(
       <Route
         render={({ location }) => (
@@ -51,7 +55,7 @@ export default class Navigation extends Component{
                 render={()=> ( <Search books={books} /> )}/>
 
               <Route path="/listbooks" location={location} 
-                render={()=> (<Listings books={books}/> )}/>
+                render={()=> (<Listings books={books} shelves={shelves}/> )}/>
 
             </Switch>
           </NavigationDrawer>

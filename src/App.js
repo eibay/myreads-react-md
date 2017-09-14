@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import update from 'immutability-helper'
 import * as BooksAPI from './BooksAPI'
 import Navigation from './Navigation'
 import Listings from './Listings'
@@ -6,7 +7,11 @@ import TabsNav from './TabsNav'
 
 class App extends Component {
   state = {
-    books: []
+    books: [],
+    listTitles: ["MyReads", "MySearch"],
+    shelves: [{slug: "currentlyReading", title: "Currently Reading", search: false},
+              {slug: "wantToRead", title: "Want To Read", search: false},
+              {slug: "read", title: "Read", search: false}]    
   }
 
   componentDidMount(){
@@ -20,12 +25,25 @@ class App extends Component {
 
   }
 
+  transferShelf = (book, shelf) => {
+    const myBooks = this.state.books
+    const modifiedBook = update(book, {shelf: {$set: (book.shelf = shelf)}} )
+    const newBooks = update(myBooks, {$apply: function(){return modifiedBook }})
+    this.setState(state => {
+      books: {newBooks}
+    })
+    BooksAPI.update(modifiedBook, shelf)
+  }
+
   render() {
-  const {books} = this.state 
+  const {books, shelves} = this.state 
     return (
       <div>
-        <Navigation books={books}>
-        </Navigation>
+        <Navigation 
+          books={books}
+          // transferShelf={this.transferShelf}
+          shelves={shelves}
+          />
       </div>
     )
   }
