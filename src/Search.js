@@ -11,7 +11,6 @@ export default class Search extends Component {
     const { books } = this.props
     return(
       <div>
-
         <Shelves books={books}/>
       </div>    
     )

@@ -31,37 +31,39 @@ import About from './About'
   ]
 
 export default class Navigation extends Component{
-  static proptypes = {
+  static propTypes = {
     books: PropTypes.array.isRequired,
-    listTitles: PropTypes.string,
-    shelves: PropTypes.array
+    shelves: PropTypes.array,
+    transferShelf: PropTypes.func
   }
 
   render(){
-    const {books, listTitles, shelves} = this.props
+    const {books, shelves, transferShelf} = this.props
     return(
       <Route
         render={({ location }) => (
           <div>
-          <NavigationDrawer
-            drawerTitle="Menu"
-            toolbarTitle="MyReads"
-            navItems={navItems.map(props => <NavLink {...props} key={props.to} />)}>
-            <Switch key={location.key}>
-              <Route exact path="/" location={location} component={Home} />
-              <Route path="/about" location={location} component={About} />
+            <NavigationDrawer
+              drawerTitle="Menu"
+              toolbarTitle="MyReads"
+              navItems={navItems.map(props => <NavLink {...props} key={props.to} />)}>
+              <Switch key={location.key}>
+                <Route exact path="/" location={location} component={Home} />
 
-              <Route path="/search" location={location} 
-                render={()=> ( <Search books={books} /> )}/>
+                <Route path="/about" location={location} component={About} />
 
-              <Route path="/listbooks" location={location} 
-                render={()=> (<Listings books={books} shelves={shelves}/> )}/>
+                <Route path="/search" location={location} 
+                  render={()=> ( <Search books={books} /> )}/>
 
-            </Switch>
-          </NavigationDrawer>
-          </div>  
-        )}
-      />
+                <Route path="/listbooks" location={location} 
+                  render={()=> (<Listings 
+                                    books={books} 
+                                    shelves={shelves} 
+                                    transferShelf={transferShelf} /> )}/>
+              </Switch>
+            </NavigationDrawer>
+          </div>)
+        }/>
     )
   }
 }

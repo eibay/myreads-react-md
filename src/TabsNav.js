@@ -28,7 +28,7 @@ class TabsNav extends Component{
 
     return(
       <div>
-        <Shelves books={showBooks} transferShelf={transferShelf} />
+        <Shelves books={showBooks} transferShelf={transferShelf} shelf={shelf} />
       </div>
     )
   }

@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import update from 'immutability-helper'
 import * as BooksAPI from './BooksAPI'
 import Navigation from './Navigation'
-import Listings from './Listings'
-import TabsNav from './TabsNav'
 
 class App extends Component {
   state = {
@@ -28,10 +26,8 @@ class App extends Component {
   transferShelf = (book, shelf) => {
     const myBooks = this.state.books
     const modifiedBook = update(book, {shelf: {$set: (book.shelf = shelf)}} )
-    const newBooks = update(myBooks, {$apply: function(){return modifiedBook }})
-    this.setState(state => {
-      books: {newBooks}
-    })
+    const books = update(myBooks, {$apply: function(){return modifiedBook }})
+    this.setState(state => {books})
     BooksAPI.update(modifiedBook, shelf)
   }
 
@@ -41,9 +37,8 @@ class App extends Component {
       <div>
         <Navigation 
           books={books}
-          // transferShelf={this.transferShelf}
-          shelves={shelves}
-          />
+          transferShelf={this.transferShelf}
+          shelves={shelves}/>
       </div>
     )
   }
