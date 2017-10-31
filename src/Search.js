@@ -4,6 +4,7 @@ import escapeRegExp from 'escape-string-regexp'
 import { FontIcon, TextField } from 'react-md'
 
 import Shelves from './Shelves'
+import './Search.css'
 
 
 export default class Search extends Component {
@@ -40,7 +41,7 @@ export default class Search extends Component {
       <div>
         <div className="search-books-bar">
           <div className="search-books-input-wrapper">
-            <input
+            <input className="search-box"
               type="text"
               placeholder="Search by title or author"
               value={query}
