@@ -53,7 +53,10 @@ export default class Navigation extends Component{
                 <Route path="/about" location={location} component={About} />
 
                 <Route path="/search" location={location} 
-                  render={()=> ( <Search books={books} /> )}/>
+                  render={()=> ( <Search 
+                                    books={books}
+                                    shelves={shelves}
+                                    transferShelf={transferShelf} /> )}/>
 
                 <Route path="/listbooks" location={location} 
                   render={()=> (<Listings 

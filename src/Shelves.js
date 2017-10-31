@@ -8,8 +8,7 @@ import Media, { MediaOverlay } from 'react-md/lib/Media'
 class Shelves extends Component{
   static propTypes = {
     books: PropTypes.array.isRequired,
-    transferShelf: PropTypes.func,
-    shelf: PropTypes.string
+    transferShelf: PropTypes.func
   }
 
   render() {
@@ -27,7 +26,7 @@ class Shelves extends Component{
             <ShelfChanger 
               book={book}
               transferShelf={transferShelf}
-              shelf={shelf} />
+              shelf={book.shelf} />
             <CardText>
               <h4>Author(s):</h4>
               {book.authors.map(author => (

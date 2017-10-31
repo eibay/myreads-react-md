@@ -7,7 +7,7 @@ class TabsNav extends Component{
     books: PropTypes.array.isRequired,
     transferShelf: PropTypes.func,
     search: PropTypes.bool.isRequired,
-    shelf: PropTypes.string.isRequired
+    shelf: PropTypes.string
   }
 
     sortShelf = (shelf)=> {
@@ -28,7 +28,8 @@ class TabsNav extends Component{
 
     return(
       <div>
-        <Shelves books={showBooks} transferShelf={transferShelf} shelf={shelf} />
+        <Shelves books={showBooks} 
+                 transferShelf={transferShelf} />
       </div>
     )
   }

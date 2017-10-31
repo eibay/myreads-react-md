@@ -3,6 +3,8 @@ import update from 'immutability-helper'
 import * as BooksAPI from './BooksAPI'
 import Navigation from './Navigation'
 
+import './App.css'
+
 class App extends Component {
   state = {
     books: [],

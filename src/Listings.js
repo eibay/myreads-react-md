@@ -7,10 +7,11 @@ class Listings extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
     transferShelf: PropTypes.func,
-    shelves: PropTypes.array.isRequired
+    shelves: PropTypes.array.isRequired,
+    shelf: PropTypes.string
   }
   render() {
-    const { books, transferShelf, shelves } = this.props
+    const { books, transferShelf, shelves, shelf } = this.props
     return(
       <div>
         <TabsContainer panelClassName="md-grid" colored>
@@ -19,8 +20,8 @@ class Listings extends Component {
             <Tab label={shelf.title} key={shelf.title}>
               <TabsNav 
                 books={books} 
-                shelf={shelf.slug} 
                 search={false}
+                shelf={shelf.slug}
                 transferShelf={transferShelf}/>
             </Tab>
             )}
