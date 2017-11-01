@@ -4,7 +4,7 @@ import escapeRegExp from 'escape-string-regexp'
 import { FontIcon, TextField } from 'react-md'
 
 import Shelves from './Shelves'
-import './search.css'
+import './Search.css'
 
 
 export default class Search extends Component {
