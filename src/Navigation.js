@@ -45,7 +45,7 @@ export default class Navigation extends Component{
           <div>
             <NavigationDrawer
               drawerTitle="Menu"
-              toolbarTitle="MyReads"
+              toolbarTitle="myEbooks"
               navItems={navItems.map(props => <NavLink {...props} key={props.to} />)}>
               <Switch key={location.key}>
                 <Route exact path="/" location={location} component={Home} />
