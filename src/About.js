@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Slider from 'react-md/lib/Sliders'
 
 export default class About extends Component {
   render() {
