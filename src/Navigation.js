@@ -10,7 +10,7 @@ import Search from './Search'
 import Listings from './Listings'
 import About from './About'
 
-  const navItems = [{
+    const navItems = [{
       exact: true,
       label: 'Home',
       to: '/',
@@ -19,10 +19,6 @@ import About from './About'
       label: 'Search',
       to: '/search',
       icon: 'bookmark',
-    }, {
-      label: 'List Books',
-      to: '/listbooks',
-      icon: 'donut_large',
     }, {
       label: 'About',
       to: '/about',
@@ -48,7 +44,11 @@ export default class Navigation extends Component{
               toolbarTitle="myEbookz"
               navItems={navItems.map(props => <NavLink {...props} key={props.to} />)}>
               <Switch key={location.key}>
-                <Route exact path="/" location={location} component={Home} />
+                <Route exact path="/" location={location} 
+                  render={()=> (<Listings 
+                                    books={books} 
+                                    shelves={shelves} 
+                                    transferShelf={transferShelf} /> )}/>
 
                 <Route path="/about" location={location} component={About} />
 
@@ -58,11 +58,6 @@ export default class Navigation extends Component{
                                     shelves={shelves}
                                     transferShelf={transferShelf} /> )}/>
 
-                <Route path="/listbooks" location={location} 
-                  render={()=> (<Listings 
-                                    books={books} 
-                                    shelves={shelves} 
-                                    transferShelf={transferShelf} /> )}/>
               </Switch>
             </NavigationDrawer>
           </div>)
