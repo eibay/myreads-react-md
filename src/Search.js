@@ -2,20 +2,30 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import escapeRegExp from 'escape-string-regexp'
 import { FontIcon, TextField } from 'react-md'
-
+import * as BooksAPI from './BooksAPI'
 import Shelves from './Shelves'
 import './search.css'
 
 
-export default class Search extends Component {
+class Search extends Component {
+
   static propTypes = {
-    books: PropTypes.array.isRequired,
-    shelves: PropTypes.array,
     transferShelf: PropTypes.func
   }
 
   state = {
-    query: ''
+    query: '',
+    books: []
+  }
+
+  componentDidMount(){
+    this.searchBooks()
+  }
+
+  searchBooks = () => {
+    BooksAPI.search(this.state.query, 20).then(books => {
+      this.setState({books})
+    })
   }
 
   updateQuery = (query) => {
@@ -56,3 +66,5 @@ export default class Search extends Component {
     )
   }
 }
+
+export default Search
