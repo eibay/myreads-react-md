@@ -12,7 +12,7 @@ class Shelves extends Component{
   }
 
   render() {
-    const { books, transferShelf, shelf } = this.props
+    const { books, transferShelf } = this.props
     return (
         <div className="md-grid">
         {books.map((book) => (

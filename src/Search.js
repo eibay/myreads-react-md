@@ -11,28 +11,28 @@ import './search.css'
 class Search extends Component {
 
   static propTypes = {
-    transferShelf: PropTypes.func
+    transferShelf: PropTypes.func,
+    books: PropTypes.array
   }
 
   state = {
     query: '',
-    books: [],
-    defaultBooks: []
+    resultBooks: []
   }
 
-  componentDidMount(){
-    this.defaultBooks()
-  }
+ // componentDidMount(){
+ //    this.currentBooks()
+ //  } 
 
-  defaultBooks = () => {
-    BooksAPI.search("React", 20).then(books => {
-      this.setState({defaultBooks: books})
-    })
-  }
+  // defaultBooks = () => {
+  //   BooksAPI.search("React", 20).then(books => {
+  //     this.setState({defaultBooks: books})
+  //   })
+  // }
 
   searchBooks = () => {
     BooksAPI.search(this.state.query, 20).then(books => {
-      this.setState({books})
+      this.setState({resultBooks: books})
     })
   }
 
@@ -48,18 +48,18 @@ class Search extends Component {
       this.updateQuery(query)
       this.searchBooks(query)
       const match = new RegExp(escapeRegExp(query), 'i')
-      let filteredBooks = this.state.books.filter(book => match.test(book.title) || match.test(book.authors))
-      this.setState({books: filteredBooks })
+      let filteredBooks = this.state.resultBooks.filter(book => match.test(book.title) || match.test(book.authors))
+      this.setState({resultBooks: filteredBooks })
   }
 
   render() {
-    const { shelves, transferShelf } = this.props
-    const { query, books, defaultBooks } = this.state 
+    const { shelves, transferShelf, books } = this.props
+    const { query, resultBooks } = this.state 
     let showBooks
     if(query){
-      showBooks = books
+      showBooks = resultBooks
     }else{
-      showBooks = defaultBooks
+      showBooks = books 
     }
 
     return(
@@ -75,7 +75,7 @@ class Search extends Component {
         </div>
         <div>  
             <Shelves books={showBooks}
-                     transferShelf={transferShelf} />
+                     transferShelf={transferShelf}/>
         </div>  
       </div>    
     )
