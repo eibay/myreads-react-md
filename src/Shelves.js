@@ -7,7 +7,7 @@ import Media, { MediaOverlay } from 'react-md/lib/Media'
 
 class Shelves extends Component{
   static propTypes = {
-    books: PropTypes.array.isRequired,
+    books: PropTypes.array,
     transferShelf: PropTypes.func
   }
 

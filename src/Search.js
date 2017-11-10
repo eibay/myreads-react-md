@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import escapeRegExp from 'escape-string-regexp'
+
 import { FontIcon, TextField } from 'react-md'
 import * as BooksAPI from './BooksAPI'
 import Shelves from './Shelves'
@@ -15,11 +16,18 @@ class Search extends Component {
 
   state = {
     query: '',
-    books: []
+    books: [],
+    defaultBooks: []
   }
 
   componentDidMount(){
-    this.searchBooks()
+    this.defaultBooks()
+  }
+
+  defaultBooks = () => {
+    BooksAPI.search("React", 20).then(books => {
+      this.setState({defaultBooks: books})
+    })
   }
 
   searchBooks = () => {
@@ -36,17 +44,24 @@ class Search extends Component {
     this.setState({query: ''})
   }
 
-  render() {
-    const { books, shelves, transferShelf } = this.props
-    const { query } = this.state 
-
-    let filteredBooks
-    if(query){
+  filterBooks = (query) => {
+      this.updateQuery(query)
+      this.searchBooks(query)
       const match = new RegExp(escapeRegExp(query), 'i')
-      filteredBooks = books.filter((book) => match.test(book.title) || match.test(book.authors))
-    }else {
-      filteredBooks = books
+      let filteredBooks = this.state.books.filter(book => match.test(book.title) || match.test(book.authors))
+      this.setState({books: filteredBooks })
+  }
+
+  render() {
+    const { shelves, transferShelf } = this.props
+    const { query, books, defaultBooks } = this.state 
+    let showBooks
+    if(query){
+      showBooks = books
+    }else{
+      showBooks = defaultBooks
     }
+
     return(
       <div>
         <div className="search-books-bar">
@@ -55,11 +70,11 @@ class Search extends Component {
               type="text"
               placeholder="Search by title or author"
               value={query}
-              onChange={event => this.updateQuery(event.target.value)}/>
+              onChange={event => this.filterBooks(event.target.value)}/>
           </div>
         </div>
         <div>  
-            <Shelves books={filteredBooks}
+            <Shelves books={showBooks}
                      transferShelf={transferShelf} />
         </div>  
       </div>    
