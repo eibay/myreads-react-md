@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 import NavigationDrawer from 'react-md/lib/NavigationDrawers'
 import NavLink from './NavLinks'
 
-import Home from './Home'
 import Search from './Search'
 import Listings from './Listings'
 import About from './About'

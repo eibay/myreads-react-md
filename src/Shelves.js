@@ -29,9 +29,10 @@ class Shelves extends Component{
               shelf={book.shelf} />
             <CardText>
               <h4>Author(s):</h4>
-              {book.authors.map(author => (
-                <h3 key={author}>{author}</h3>
-              ))}
+              {book.authors.map(author => (author) ? 
+                  <h3 key={author}>{author}</h3> : <h3 key={author}>None</h3>
+              )}
+              
             </CardText>
           </Card>
         ))}

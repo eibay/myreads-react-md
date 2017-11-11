@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import escapeRegExp from 'escape-string-regexp'
+import update from 'immutability-helper'
 
 import { FontIcon, TextField } from 'react-md'
 import * as BooksAPI from './BooksAPI'
@@ -19,16 +20,6 @@ class Search extends Component {
     query: '',
     resultBooks: []
   }
-
- // componentDidMount(){
- //    this.currentBooks()
- //  } 
-
-  // defaultBooks = () => {
-  //   BooksAPI.search("React", 20).then(books => {
-  //     this.setState({defaultBooks: books})
-  //   })
-  // }
 
   searchBooks = () => {
     BooksAPI.search(this.state.query, 20).then(books => {
