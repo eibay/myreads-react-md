@@ -26,7 +26,9 @@ class Search extends Component {
     this.updateQuery(query)
     BooksAPI.search(this.state.query, 20).then(newBooks => {
       if(newBooks){
-        this.setState({resultBooks: newBooks})
+        console.log("Search: newBooks")
+        console.log(newBooks)
+        this.updateResultBooks(newBooks)
         (this.state.resultBooks) ? this.filterBooks(query) : null
       }else{
         this.clearResultBooks()
@@ -46,6 +48,10 @@ class Search extends Component {
     this.setState({resultBooks: []})
   }
 
+  updateResultBooks = (books) => {
+    this.setState({resultBooks: books})
+  }
+
   filterBooks = (query) => {
       const match = new RegExp(escapeRegExp(query), 'i')
       const filteredBooks = this.state.resultBooks.filter(book => match.test(book.title))
@@ -53,14 +59,13 @@ class Search extends Component {
   }
 
   addBook = (book, shelf) => {
-    const myBooks = this.props.books
     const modifiedBook = update(book, {shelf: {$set: (book.shelf = shelf)}} )
     this.props.updateBooks(modifiedBook)
     BooksAPI.update(modifiedBook, shelf)
   }
 
   render() {
-    const { shelves, transferShelf, books } = this.props
+    const { transferShelf, books } = this.props
     const { query, resultBooks } = this.state
 
     return(
@@ -69,7 +74,7 @@ class Search extends Component {
           <div className="search-books-input-wrapper">
             <input className="search-box"
               type="text"
-              placeholder="Search by title or author"
+              placeholder="Search by title"
               value={query}
               onChange={event => this.searchBooks(event.target.value)} />
           </div>
