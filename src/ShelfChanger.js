@@ -21,7 +21,6 @@ class ShelfChanger extends Component{
       this.setState( {selectValue: selectedOption} )
     }else{
       this.props.clearQuery
-      console.log("ShelfChanger: clearQuery ON!")
     }
   }
 

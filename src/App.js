@@ -38,11 +38,15 @@ class App extends Component {
     let currentSetBooks = this.state.books
     let newSetBooks
 
-    this.checkBookOnList(currentSetBooks, modifiedBook) ? 
-        alert(`This book already exist in your shelf.`) : 
-        newSetBooks = currentSetBooks.push(modifiedBook)
+    if (this.checkBookOnList(currentSetBooks, modifiedBook)){
+      alert(`This book already exist in your shelf.`)
+    }else {
+      newSetBooks = currentSetBooks.push(modifiedBook)
+      this.setState(state => {books: newSetBooks})
+      alert(`Success: Book is now added and can be found at ${modifiedBook.shelf} shelf.`)
+      BooksAPI.update(modifiedBook, modifiedBook.shelf)
+    }
 
-    this.setState(state => {books: newSetBooks})
   }
 
   transferShelf = (book, shelf) => {

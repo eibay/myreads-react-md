@@ -17,8 +17,6 @@ class Shelves extends Component{
     const { books, transferShelf, addBook, clearQuery } = this.props
 
     if (books){
-      console.log("Shelves: books")
-      console.log(books)
       return (
           <div className="md-grid">
           {books.map((book) => (

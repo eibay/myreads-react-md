@@ -26,16 +26,9 @@ class Search extends Component {
     this.updateQuery(query)
     BooksAPI.search(this.state.query, 20).then(newBooks => {
       if(newBooks){
-        console.log("Search: newBooks")
-        console.log(newBooks)
-
         this.setState({resultBooks: newBooks})
-        console.log("Search: resultBooks")
-        console.log(this.state.resultBooks)
-
         (this.state.resultBooks) ? this.filterBooks(query) : null
       }else{
-        console.log("Search Error: no book found")
         this.clearResultBooks()
       }
     })
