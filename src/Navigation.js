@@ -29,11 +29,12 @@ export default class Navigation extends Component{
   static propTypes = {
     books: PropTypes.array.isRequired,
     shelves: PropTypes.array,
-    transferShelf: PropTypes.func
+    transferShelf: PropTypes.func,
+    updateBooks: PropTypes.func
   }
 
   render(){
-    const {books, shelves, transferShelf} = this.props
+    const {books, shelves, transferShelf, updateBooks} = this.props
     return(
       <Route
         render={({ location }) => (
@@ -55,6 +56,7 @@ export default class Navigation extends Component{
                   render={()=> ( <Search 
                                     books={books}
                                     shelves={shelves}
+                                    updateBooks={updateBooks}
                                     transferShelf={transferShelf} /> )}/>
 
               </Switch>

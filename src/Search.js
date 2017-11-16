@@ -13,6 +13,7 @@ class Search extends Component {
 
   static propTypes = {
     transferShelf: PropTypes.func,
+    updateBooks: PropTypes.func,
     books: PropTypes.array
   }
 
@@ -21,9 +22,22 @@ class Search extends Component {
     resultBooks: []
   }
 
-  searchBooks = () => {
-    BooksAPI.search(this.state.query, 20).then(books => {
-      this.setState({resultBooks: books})
+  searchBooks = (query) => {
+    this.updateQuery(query)
+    BooksAPI.search(this.state.query, 20).then(newBooks => {
+      if(newBooks){
+        console.log("Search: newBooks")
+        console.log(newBooks)
+
+        this.setState({resultBooks: newBooks})
+        console.log("Search: resultBooks")
+        console.log(this.state.resultBooks)
+
+        (this.state.resultBooks) ? this.filterBooks(query) : null
+      }else{
+        console.log("Search Error: no book found")
+        this.clearResultBooks()
+      }
     })
   }
 
@@ -35,23 +49,26 @@ class Search extends Component {
     this.setState({query: ''})
   }
 
+  clearResultBooks = () => {
+    this.setState({resultBooks: []})
+  }
+
   filterBooks = (query) => {
-      this.updateQuery(query)
-      this.searchBooks(query)
       const match = new RegExp(escapeRegExp(query), 'i')
-      let filteredBooks = this.state.resultBooks.filter(book => match.test(book.title) || match.test(book.authors))
+      const filteredBooks = this.state.resultBooks.filter(book => match.test(book.title))
       this.setState({resultBooks: filteredBooks })
+  }
+
+  addBook = (book, shelf) => {
+    const myBooks = this.props.books
+    const modifiedBook = update(book, {shelf: {$set: (book.shelf = shelf)}} )
+    this.props.updateBooks(modifiedBook)
+    BooksAPI.update(modifiedBook, shelf)
   }
 
   render() {
     const { shelves, transferShelf, books } = this.props
-    const { query, resultBooks } = this.state 
-    let showBooks
-    if(query){
-      showBooks = resultBooks
-    }else{
-      showBooks = books 
-    }
+    const { query, resultBooks } = this.state
 
     return(
       <div>
@@ -61,11 +78,13 @@ class Search extends Component {
               type="text"
               placeholder="Search by title or author"
               value={query}
-              onChange={event => this.filterBooks(event.target.value)}/>
+              onChange={event => this.searchBooks(event.target.value)} />
           </div>
         </div>
         <div>  
-            <Shelves books={showBooks}
+            <Shelves books={resultBooks}
+                     addBook={this.addBook}
+                     clearQuery={this.clearQuery}
                      transferShelf={transferShelf}/>
         </div>  
       </div>    

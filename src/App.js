@@ -25,11 +25,30 @@ class App extends Component {
 
   }
 
+  checkBookOnList = (currentSetBooks, modifiedBook) => {
+    const currentBooksTitles = []
+    currentSetBooks.map(book => {
+      currentBooksTitles.push(book.title)
+    })
+    let checkBook = currentBooksTitles.includes(modifiedBook.title)
+    return checkBook
+  }
+
+  updateBooks = (modifiedBook) => {
+    let currentSetBooks = this.state.books
+    let newSetBooks
+
+    this.checkBookOnList(currentSetBooks, modifiedBook) ? 
+        alert(`This book already exist in your shelf.`) : 
+        newSetBooks = currentSetBooks.push(modifiedBook)
+
+    this.setState(state => {books: newSetBooks})
+  }
+
   transferShelf = (book, shelf) => {
     const myBooks = this.state.books
     const modifiedBook = update(book, {shelf: {$set: (book.shelf = shelf)}} )
-    const books = update(myBooks, {$apply: function(){return modifiedBook }})
-    this.setState(state => {books})
+    this.setState(state => {books: modifiedBook })
     BooksAPI.update(modifiedBook, shelf)
   }
 
@@ -40,6 +59,7 @@ class App extends Component {
         <Navigation 
           books={books}
           transferShelf={this.transferShelf}
+          updateBooks={this.updateBooks}
           shelves={shelves}/>
       </div>
     )
