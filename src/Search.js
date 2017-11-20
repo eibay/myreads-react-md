@@ -14,6 +14,7 @@ class Search extends Component {
   static propTypes = {
     transferShelf: PropTypes.func,
     updateBooks: PropTypes.func,
+    checkBookOnList: PropTypes.func,
     books: PropTypes.array
   }
 
@@ -25,14 +26,9 @@ class Search extends Component {
   searchBooks = (query) => {
     this.updateQuery(query)
     BooksAPI.search(this.state.query, 20).then(newBooks => {
-      if(newBooks){
-        console.log("Search: newBooks")
-        console.log(newBooks)
-        this.updateResultBooks(newBooks)
-        (this.state.resultBooks) ? this.filterBooks(query) : null
-      }else{
-        this.clearResultBooks()
-      }
+        this.setState({resultBooks : newBooks})
+        let newResultBooks = (this.state.resultBooks).filter(book => !((this.props.books.some)(b => b.id === book.id)))
+        this.setState({resultBooks: newResultBooks})
     })
   }
 
@@ -46,10 +42,6 @@ class Search extends Component {
 
   clearResultBooks = () => {
     this.setState({resultBooks: []})
-  }
-
-  updateResultBooks = (books) => {
-    this.setState({resultBooks: books})
   }
 
   filterBooks = (query) => {

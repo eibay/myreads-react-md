@@ -9,9 +9,9 @@ class App extends Component {
   state = {
     books: [],
     listTitles: ["MyReads", "MySearch"],
-    shelves: [{slug: "currentlyReading", title: "Currently Reading", search: false},
-              {slug: "wantToRead", title: "Want To Read", search: false},
-              {slug: "read", title: "Read", search: false}]    
+    shelves: [{slug: "currentlyReading", title: "Currently Reading"},
+              {slug: "wantToRead", title: "Want To Read"},
+              {slug: "read", title: "Read"}]    
   }
 
   componentDidMount(){
@@ -28,9 +28,9 @@ class App extends Component {
   checkBookOnList = (currentSetBooks, modifiedBook) => {
     const currentBooksTitles = []
     currentSetBooks.map(book => {
-      currentBooksTitles.push(book.title)
+      currentBooksTitles.push(book.id)
     })
-    let checkBook = currentBooksTitles.includes(modifiedBook.title)
+    let checkBook = currentBooksTitles.includes(modifiedBook.id)
     return checkBook
   }
 
@@ -64,6 +64,7 @@ class App extends Component {
           books={books}
           transferShelf={this.transferShelf}
           updateBooks={this.updateBooks}
+          checkBookOnList={this.checkBookOnList}
           shelves={shelves}/>
       </div>
     )
