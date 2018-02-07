@@ -1,5 +1,5 @@
 {
-  "name": "MyeBooks",
+  "name": "myReads",
   "version": "0.1.0",
   "private": true,
   "homepage": "https://eibay.github.io/myreads-react-md",
@@ -19,10 +19,17 @@
     "webfontloader": "^1.6.27"
   },
   "devDependencies": {
+    "eslint": "^4.14.0",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-react": "^7.5.1",
+    "eslint-plugin-standard": "^3.0.1",
     "react-scripts": "0.9.5"
   },
   "scripts": {
-    "pre-deploy": "yarn run build",
+    "pre-deploy": "npm run build",
     "deploy": "gh-pages -d build",
     "build-css": "node-sass src/ -o src/",
     "watch-css": "npm run build-css && node-sass src/ -o src/ --watch --recursive",
